@@ -1,0 +1,584 @@
+:root {
+  --ink: #0f1b2d;
+  --ink-2: #3b4a5d;
+  --ink-3: #66768a;
+  --line: rgba(15, 27, 45, 0.13);
+  --line-2: rgba(15, 27, 45, 0.08);
+  --bg: #ffffff;
+  --bg-soft: #f3f6fa;
+  --paper: #ffffff;
+  --paper-2: #f5f7fa;
+  --brand: #0b63e5;
+  --brand-hover: #0a56c9;
+  --brand-ink: #0a4fb8;
+  --brand-soft: #e9f1fe;
+  --sun: #ffb81f;
+  --good: #11875f;
+  --good-soft: #def5ec;
+  --warn: #a86400;
+  --warn-soft: #fff3d9;
+  --bad: #d23f45;
+  --bad-soft: #fde8e8;
+
+  --radius-xl: 22px;
+  --radius-lg: 16px;
+  --radius: 12px;
+  --radius-sm: 9px;
+  --shadow-sm: 0 1px 2px rgba(15, 27, 45, 0.05), 0 4px 14px -8px rgba(15, 27, 45, 0.12);
+  --shadow: 0 20px 44px -26px rgba(15, 27, 45, 0.35), 0 3px 10px rgba(15, 27, 45, 0.05);
+  --shadow-lg: 0 36px 70px -34px rgba(15, 27, 45, 0.5);
+
+  --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gutter: clamp(16px, 4vw, 40px);
+  --nav-h: 68px;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--brand-ink);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(10, 116, 240, 0.55);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #bfe3ff;
+}
+
+code {
+  padding: 0.1em 0.45em;
+  border-radius: 6px;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* ---------- Layout helpers ---------- */
+
+.container {
+  width: min(1180px, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.container--narrow {
+  width: min(780px, 100% - 2 * var(--gutter));
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.text-warn {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0.7em 1.25em;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 8px 18px -10px rgba(11, 99, 229, 0.75);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.btn--ghost {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  border-color: rgba(15, 27, 45, 0.3);
+}
+
+/* White button for dark backgrounds (the hero). */
+.btn--light {
+  background: #fff;
+  color: var(--ink);
+}
+
+.btn--light:hover {
+  background: #eef2f7;
+}
+
+.btn--done {
+  background: var(--good-soft);
+  border-color: rgba(17, 135, 95, 0.25);
+  color: var(--good);
+}
+
+.btn--good {
+  background: var(--good);
+  color: #fff;
+}
+
+.btn--danger {
+  background: var(--bad);
+  color: #fff;
+}
+
+.btn--danger-ghost {
+  background: transparent;
+  border-color: rgba(210, 63, 69, 0.35);
+  color: var(--bad);
+}
+
+.btn--danger-ghost:hover:not(:disabled) {
+  background: var(--bad-soft);
+}
+
+.btn--sm {
+  min-height: 36px;
+  padding: 0.45em 0.95em;
+  font-size: 0.9rem;
+}
+
+.btn--lg {
+  min-height: 54px;
+  padding: 0.85em 1.6em;
+  font-size: 1.04rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--paper-2);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--sun);
+  color: #4a3300;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+/* ---------- Reveal on scroll ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Forms ---------- */
+
+.field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field > label,
+.field > legend {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.65em 0.85em;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.field textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(10, 116, 240, 0.16);
+}
+
+.field--error input,
+.field--error select,
+.field--error textarea {
+  border-color: var(--bad);
+}
+
+.field__error {
+  color: var(--bad);
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.check input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--brand);
+}
+
+.check--small {
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.check--small input {
+  margin-top: 0;
+}
+
+/* ---------- Notices & badges ---------- */
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  color: var(--ink-2);
+  font-size: 0.93rem;
+}
+
+.notice > .icon {
+  margin-top: 2px;
+  color: var(--brand);
+}
+
+.notice--error {
+  background: var(--bad-soft);
+  color: #7b1d21;
+}
+
+.notice--error > .icon {
+  color: var(--bad);
+}
+
+.notice--warn {
+  background: var(--warn-soft);
+  color: #663f00;
+}
+
+.notice--warn > .icon {
+  color: var(--warn);
+}
+
+.notice--button {
+  width: 100%;
+  border: 0;
+  text-align: left;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge--pending {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.status-badge--confirmed {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+}
+
+.status-badge--completed {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.status-badge--cancelled {
+  background: #edf1f5;
+  color: var(--ink-3);
+}
+
+/* ---------- Logo ---------- */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.logo__mark {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.logo--light {
+  color: #fff;
+}
+
+/* ---------- Design switch (same look in both designs, so it uses fixed colours) ---------- */
+
+.design-switch {
+  position: fixed;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(12, 20, 32, 0.9);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+  font-family: 'Inter Variable', system-ui, sans-serif;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.design-switch__label {
+  padding: 0 6px 0 8px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.design-switch button {
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.design-switch button:hover {
+  color: #fff;
+}
+
+.design-switch button.is-active {
+  background: #fff;
+  color: #0f1b2d;
+}
+
+@media (max-width: 640px) {
+  .design-switch {
+    top: 112px;
+    right: 12px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .design-switch__label {
+    display: none;
+  }
+
+  .design-switch button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

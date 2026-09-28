@@ -1,0 +1,4 @@
+# Keep Unix line endings everywhere (the live server runs Linux).
+* text=auto eol=lf
+*.png binary
+*.woff2 binary
