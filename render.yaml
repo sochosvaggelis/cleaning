@@ -1,41 +1,50 @@
 # Render Blueprint: tells Render how to run this project.
-# In the Render dashboard: New → Blueprint → pick this GitHub repo → fill in the values it asks for.
-# Values marked `sync: false` are secrets or yours to choose; they are typed into Render, never committed.
+# In the Render dashboard: New → Blueprint → pick this GitHub repo → fill in the value it asks for.
+#
+# FREE PREVIEW SETUP (no card needed). Render's free plan limits:
+#   - the site sleeps after 15 minutes without visitors; the next visit takes about a minute
+#   - files are wiped whenever it sleeps, restarts or redeploys, so bookings don't last
+#   - sending email (SMTP) is blocked, so there are no booking notifications
+# Fine for showing the site to people, not for real customers. See "Upgrading" at the bottom.
 services:
   - type: web
     name: cleanup-co
     runtime: node
     region: frankfurt # closest to Greece
-    plan: starter # a paid instance is required for the disk; free ones sleep and lose files
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
-    # The bookings database lives on this disk so it survives deploys and restarts.
-    # (With a disk the service always runs as a single instance, which SQLite needs.)
-    disk:
-      name: bookings
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATA_DIR
-        value: /var/data
       - key: BUSINESS_TIMEZONE
         value: Europe/Athens
+      # Shows a "preview site, please call to book" notice above the booking form.
+      - key: VITE_PREVIEW_NOTICE
+        value: "true"
       - key: SESSION_SECRET
         generateValue: true
       - key: ADMIN_PASSWORD
         sync: false
-      # e.g. https://cleanup-co.onrender.com until you connect your own domain
-      - key: PUBLIC_URL
-        sync: false
-      # Where new-booking emails go, plus the mailbox that sends them (see README → Emails)
-      - key: NOTIFY_EMAIL
-        sync: false
-      - key: SMTP_HOST
-        sync: false
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
-        sync: false
+
+# Upgrading to a real live site (Starter plan, about $7/month, card needed):
+#   1. Change `plan: free` to `plan: starter` and add, at the same level as envVars:
+#        disk:
+#          name: bookings
+#          mountPath: /var/data
+#          sizeGB: 1
+#   2. Add these envVars (`sync: false` ones are typed into Render, never committed):
+#        - key: DATA_DIR
+#          value: /var/data
+#        - key: PUBLIC_URL
+#          sync: false
+#        - key: NOTIFY_EMAIL
+#          sync: false
+#        - key: SMTP_HOST
+#          sync: false
+#        - key: SMTP_USER
+#          sync: false
+#        - key: SMTP_PASS
+#          sync: false
+#   3. Delete the VITE_PREVIEW_NOTICE entry, then commit and push.

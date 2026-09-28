@@ -879,3 +879,7 @@
   justify-content: center;
   gap: 10px;
 }
+
+.preview-notice {
+  margin-bottom: 16px;
+}

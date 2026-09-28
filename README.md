@@ -71,20 +71,25 @@ PUBLIC_URL=https://your-domain.com
 
 ## Going live (GitHub + Render)
 
-GitHub stores the code; Render builds and runs it. The whole Render setup is in `render.yaml`.
+GitHub stores the code; Render builds and runs it. The whole Render setup is in `render.yaml`, which is
+currently the **free preview** setup (no card needed). On Render's free plan:
+
+- the site sleeps after 15 minutes without visitors and takes about a minute to wake up
+- bookings are wiped whenever it sleeps, restarts or redeploys, and it can't send email
+- so a notice above the booking form asks visitors to call instead (`VITE_PREVIEW_NOTICE`)
+
+Steps:
 
 1. Push the code to GitHub (`git push`).
 2. In the Render dashboard: **New → Blueprint**, connect GitHub and pick this repo. Render reads
-   `render.yaml` and creates one web service in Frankfurt (Starter plan) with a 1 GB disk for the
-   bookings database.
-3. Fill in the values it asks for:
-   - `ADMIN_PASSWORD`: the dashboard password for the live site (make a new, long one)
-   - `PUBLIC_URL`: start with the `https://….onrender.com` address Render gives you
-   - `NOTIFY_EMAIL`, `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`: see **Emails** above
-   - `SESSION_SECRET` is generated for you
+   `render.yaml` and creates one free web service in Frankfurt.
+3. Enter an `ADMIN_PASSWORD` for the live dashboard (make a new, long one). `SESSION_SECRET` is
+   generated for you.
 4. Deploy. From then on, every `git push` to `main` redeploys automatically.
-5. Your own domain: in Render, open the service → **Settings → Custom Domains**, add the DNS records it
-   shows at your domain registrar (HTTPS is automatic), then change `PUBLIC_URL` to the new address.
+
+**Before taking real bookings**, upgrade: follow "Upgrading" at the bottom of `render.yaml` (Starter plan
+with a disk for the bookings, about $7/month, plus the email settings from **Emails** above). Then add
+your own domain in Render (**Settings → Custom Domains**, HTTPS is automatic) and set `PUBLIC_URL` to it.
 
 To try production mode on your own computer: `npm run build && npm start`, then open
 <http://localhost:3001>. Keep the live site at **one** instance: SQLite can't be shared between several.
